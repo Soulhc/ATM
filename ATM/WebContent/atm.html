@@ -11,7 +11,7 @@
 <style type="text/css">
 #main {
 	border: 40px solid #E3EDCD;
-	width: 40%;
+	width: 800px;
 	height: 1000px;
 	background-color: #E3EDCD;
 	margin: 0 auto;
@@ -129,6 +129,19 @@
 	background-color: #E9EBFE;
 	margin-left: -580px;
 }
+#ll{
+  width:600px;
+  height:200px;
+  border:1px solid #ccc;
+  background:#ccc;
+}
+img{
+  width:400px;
+  height:150px;
+}
+.money{
+  display:none;
+}
 </style>
 </head>
 
@@ -138,11 +151,12 @@
 		<div id="display"></div>
 		<textarea rows="15" cols="20" id="area">
 		  </textarea>
-		<div id="panel"></div>
+		
+		<div id="panel">
+		</div>
 		<div id="receipt">
 			<center>
 				<button type="button" id="btn">打印口</button>
-				<button type="button" id="btn">存取款口</button>
 				<br /> <br />
 			</center>
 			<center>
@@ -176,7 +190,11 @@
 			<center></center>
 			<button class="identity">管理员</button>
 		</div>
-
+	     <button class="insertMoney">插钱口</button>
+		<div id="ll">出钱口
+		  <img class="money" src="img/money.jpg"></img>
+		  <img class="gaizi" src="img/123.jpg"></img>
+		</div>
 	</div>
 </body>
 </html>

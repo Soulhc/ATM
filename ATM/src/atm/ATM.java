@@ -39,6 +39,12 @@ public class ATM {
 	// 管理员按钮对象
 	private IdentityButton identity_button = null;
 	
+	private MoneySlot moneySlot = null;
+	
+	public MoneySlot getMoneySlot() {
+		return moneySlot;
+	}
+
 	public Session getSession() {
 		return this.session;
 	}
@@ -82,6 +88,7 @@ public class ATM {
 		bton_digit = new DigitButton();
 		print = new Print();
 		identity_button = new IdentityButton();
+		moneySlot = new MoneySlot();
 	}
 
 	/**

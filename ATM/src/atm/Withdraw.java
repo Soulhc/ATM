@@ -33,9 +33,22 @@ public class Withdraw extends Transaction {
 		super(session,acct);
 		// 当选择取款交易时,需要改变显示屏的显示,需要改变数字键盘的状态
 		ATM machine = ATM.getInstance();
-		machine.getDisplay().setText("请输入存款金额");
+		machine.getDisplay().setText("请放入纸币");
 		machine.getPrint().setText("");
-		machine.getDigitButton().stateChange(1, 0, "WithdepositServlet");
+		machine.getDigitButton().stateChange(2, 1, "WithdepositServlet");
+		machine.getMoneySlot().setInsertMoney(true);
+	}
+	
+	/**
+	 * 改变屏幕内容
+	 * @param text
+	 */
+	public void SetDisplay(int state,String text,String servlet,boolean dep){
+		this.setState(state);
+		ATM machine = ATM.getInstance();
+		machine.getDisplay().setText(text);
+		machine.getDigitButton().stateChange(0, 0, servlet);
+		machine.getMoneySlot().setDepositMoney(true);
 	}
 	
 	/**
@@ -46,18 +59,18 @@ public class Withdraw extends Transaction {
 		// 扣取成功
 		if(ret == 0) {
 			// 显示屏更新 数字键盘状态更新 
-			this.setState(TRANS_SUCCESS);
-			ATM machine = ATM.getInstance();
-			machine.getDisplay().setText("取款成功。你的余额是"+this.getAccount().getBalance()+"<br>"+"打印:0 不打印:1");
-			machine.getDigitButton().stateChange(0, 0, "WithdrawPrintServlet");
+			SetDisplay(TRANS_SUCCESS,"取款成功。你的余额是"+this.getAccount().getBalance()+"<br>"+"打印:0 不打印:1","WithdrawPrintServlet",true);
 		}
 		// 扣取不成功
-		else {
-			this.setState(TRANS_FAILURE);
+		else if(ret == 2){
 			this.getSession().setState(Session.CHOOSING);
-			ATM machine = ATM.getInstance();
-			machine.getDisplay().setText("对不起。取款失败,您的账户余额不足。你的账户存款为"+this.getAccount().getBalance()+"元"+"<br><br>"+"请重修选择业务 1:取款 2:存款 0:退出");
-			machine.getDigitButton().stateChange(0, 0, "TransactionServlet");
+			SetDisplay(TRANS_FAILURE,"对不起。您只能取面值为100的钞票。<br><br>请重修选择业务 1:取款 2:存款 0:退出","TransactionServlet",false);
+		}else if(ret == 3){
+			this.getSession().setState(Session.CHOOSING);
+			SetDisplay(TRANS_FAILURE,"对不起。您一天最多只能取20000元。<br><br>请重修选择业务 1:取款 2:存款 0:退出","TransactionServlet",false);
+		}else{
+			this.getSession().setState(Session.CHOOSING);
+			SetDisplay(TRANS_FAILURE,"对不起。取款失败,您的账户余额不足。你的账户存款为"+this.getAccount().getBalance()+"元"+"<br><br>"+"请重修选择业务 1:取款 2:存款 0:退出","TransactionServlet",false);
 		}
 	}
 	

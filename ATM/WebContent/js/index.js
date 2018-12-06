@@ -47,7 +47,7 @@ switchButton.refresh = function refresh(text,disable){
 	else if(atm.status == 1){
 		$("#switch").click(turnon);	
 	}
-	$("#switch").attr('disable',disable);
+	$("#switch").attr('disabled',disable);
 }
 
 // 插卡孔
@@ -59,6 +59,22 @@ cardSlot.refresh = function refresh(text,inserted){
 	$("#card").attr('disable',inserted);
 }
 
+var moneySlot = {insertMoney:false,depositMoney:false};
+moneySlot.refresh = function refresh(insertMoney,depositMoney){
+	if(insertMoney){
+		$(".insertMoney").attr('onclick',"insertMoney();","");
+	}else{
+		$(".insertMoney").removeAttr('onclick');
+	}
+	
+	if(depositMoney){
+		$(".money").show();
+		$(".gaizi").hide();
+	}else{
+		$(".gaizi").show();
+		$(".money").hide();
+	}
+}
 // 数字按钮
 var digitButton = {state:2,visibility:0,servletName:""};
 digitButton.refresh = function refresh(state,visibility,servletName){
@@ -89,7 +105,6 @@ function readNum(obj){
 		display.show(str);
 	}
 	else if(digitButton.state == 2){
-		
 	}
 }
 
@@ -100,6 +115,15 @@ $(document).ready(function() {
 	getStatus();
 });
 
+function insertMoney(){
+	jPrompt('请放入面额为100的纸币','',function(event,val){
+		if(val%100==0 && val<=5000){
+		 var str="您已放入了"+val+"元,请按确认按钮将钱存入。";
+		 num = val;
+		 display.show(str);
+		}
+	},"存款");
+}
 function refresh(resp){
 	atm.refresh(resp.ATM.state);
 	display.refresh(resp.display.text);
@@ -132,20 +156,19 @@ function turnoff(){
 function insertCard(){
 	jPrompt('请输入账号','',function(event,val){
 		var cardNo = val;
+		 $.post('/ATM/CardInsertedServlet','cardNo='+cardNo, function(responseText) {
+				refresh(responseText);
+			});	
 	},"账号验证");
-	
-	$.post('/ATM/CardInsertedServlet','cardNo='+cardNo, function(responseText) {
-		refresh(responseText);
-	});	
 }
 
 function insertAdminCard(){
 	jPrompt('请输入账号','',function(event,val){
 		var cardNo = val;
+		 $.post('/ATM/CardInsertedServlet','cardNo='+cardNo, function(responseText) {
+				refresh(responseText);
+			});	
 	},"账号验证");
-	$.post('/ATM/CardInsertedAdminServlet','cardNo='+cardNo, function(responseText) {
-		refresh(responseText);
-	});	
 }
 
 function submitNum(number){

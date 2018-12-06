@@ -96,7 +96,14 @@ public class Account {
 	 * @return 0:成功 1:不成功
 	 */
 	public int withdraw(double amount) {
-		if (this.balance >= amount) {
+		if(amount == 0)
+			amount=amount+1;
+		if(amount%100!=0 && amount<=20000 && 0<=amount){
+			return 2;
+		}else if(amount>20000 || amount==0){
+			return 3;
+		}
+		else  if(this.balance >= amount) {
 			this.balance = this.balance - amount;
 		    AccountExecute.updateAccount(this.balance,this.card_no);
 			TransactionExecute.InsertTransaction(this.card_no,Transaction.BALANCE_OUT,amount);
