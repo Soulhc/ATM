@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="css/jquery.dialog.css" type="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.dialog.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<title>ATM</title>
+
+<style type="text/css">
+#main {
+	border: 40px solid #E3EDCD;
+	width: 40%;
+	height: 1000px;
+	background-color: #E3EDCD;
+	margin: 0 auto;
+}
+
+#display {
+	font-family: "微软雅黑";
+	border: 3px solid pink;
+	font-size: 30px;
+	display: inline-block;
+	width: 96%;
+	height: 40%;
+	background-color: #FAF9DE;
+	margin-left: 20px;
+	margin-top: 20px;
+	color: #4d4d4d;
+	line-height: 40px;
+}
+
+#receipt {
+	background-color: #E9EBFE;
+	font-family: "微软雅黑";
+	margin-top: 50px;
+	float: right;
+	margin-right: 20px;
+	display: inline-block;
+	border: 2px solid #ccc;
+	width: 35%;
+	height: 450px;
+	color: #4d4d4d;
+}
+
+#btn {
+	width: 90%;
+	height: 60px;
+	margin-top: 10px;
+	font-size: large;
+	background-color: #E9EBFE;
+}
+
+#area {
+	height: 250px;
+	width: 50%;
+	margin-left: -50px;
+	margin-top: 100px;
+	font-size: 30px;
+	line-height: 40px;
+}
+
+.number {
+	width: 30%;
+	height: 45px;
+	font-size: large;
+	margin-top: 10px;
+	background-color: #E9EBFE;
+}
+
+.command {
+	width: 30%;
+	height: 45px;
+	font-size: large;
+	margin-top: 10px;
+	background-color: #E9EBFE;
+}
+
+#panel {
+	border: 0px solid;
+	width: 10%;
+	height: 40px;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-size: large;
+	/*background-color:#7A82FF;*/
+	float: left;
+}
+
+#left_panel {
+	border: 1px solid;
+	width: 30%;
+	height: 40px;
+	margin-top: 0px;
+	display: inline-block;
+	background-color: #7A82FF;
+}
+
+#right_panel {
+	border: 1px solid;
+	width: 65%;
+	height: 40px;
+	display: inline-block;
+	background-color: #7A82FF;
+}
+
+#log {
+	border: 1px solid;
+	width: 20%;
+	height: 30px;
+	margin-top: 0px;
+	font-size: small;
+	display: inline;
+}
+
+.button {
+	width: 122px;
+	height: 40px;
+	margin-top: 15px;
+	background-color: #E9EBFE;
+	
+}
+
+.identity {
+	width: 122px;
+	height: 40px;
+	margin-top: 20px;
+	background-color: #E9EBFE;
+	margin-left: -580px;
+}
+</style>
+</head>
+
+<body bgcolor="#ffffff">
+
+	<div id="main">
+		<div id="display"></div>
+		<textarea rows="15" cols="20" id="area">
+		  </textarea>
+		<div id="panel"></div>
+		<div id="receipt">
+			<center>
+				<button type="button" id="btn">打印口</button>
+				<button type="button" id="btn">存取款口</button>
+				<br /> <br />
+			</center>
+			<center>
+				<button type="button" id="b1" class="number" value="1"
+					onclick="readNum(this);">1</button>
+				<button type="button" id="b2" class="number" value="2"
+					onclick="readNum(this);">2</button>
+				<button type="button" id="b3" class="number" value="3"
+					onclick="readNum(this);">3</button>
+				<button type="button" id="b4" class="number" value="4"
+					onclick="readNum(this);">4</button>
+				<button type="button" id="b5" class="number" value="5"
+					onclick="readNum(this);">5</button>
+				<button type="button" id="b6" class="number" value="6"
+					onclick="readNum(this);">6</button>
+				<button type="button" id="b7" class="number" value="7"
+					onclick="readNum(this);">7</button>
+				<button type="button" id="b8" class="number" value="8"
+					onclick="readNum(this);">8</button>
+				<button type="button" id="b9" class="number" value="9"
+					onclick="readNum(this);">9</button>
+				<button type="button" id="comfirm" class="command"
+					onclick="submit();">确认</button>
+				<button type="button" id="b0" class="number" value="0"
+					onclick="readNum(this);">0</button>
+				<button type="button" id="cancel" class="command">取消</button>
+				<button type="button" class="button" id="card">插卡</button>
+				<button type="button" class="button" id="switch">开机</button>
+			</center>
+			<br />
+			<center></center>
+			<button class="identity">管理员</button>
+		</div>
+
+	</div>
+</body>
+</html>
