@@ -194,6 +194,8 @@ public class ATM {
 		output += "\"print\":" + this.print.toString();
 		output += ",";
 		output += "\"identity_button\":" + this.identity_button.toString();
+		output += ",";
+		output += "\"moneySolt\":" + this.moneySlot.toString();
 		output += "}";
 		return output;
 	}

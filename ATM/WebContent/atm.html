@@ -9,58 +9,106 @@
 <title>ATM</title>
 
 <style type="text/css">
+body{
+   font-family:"微软雅黑";
+}
+/*主样式*/
 #main {
-	border: 40px solid #E3EDCD;
-	width: 800px;
-	height: 1000px;
-	background-color: #E3EDCD;
+	border: 1px solid;
+	width: 1000px;
+	height: 870px;
+	background-color: #A8A8A8;
 	margin: 0 auto;
 }
-
+/*显示屏页面*/
 #display {
-	font-family: "微软雅黑";
-	border: 3px solid pink;
-	font-size: 30px;
+	border: 1px solid;
 	display: inline-block;
 	width: 96%;
 	height: 40%;
 	background-color: #FAF9DE;
 	margin-left: 20px;
 	margin-top: 20px;
-	color: #4d4d4d;
-	line-height: 40px;
+	color: green;
+	font-size:20px;
+	box-shadow: green 0 0 20px;
 }
-
+/*数字按钮面板*/
 #receipt {
-	background-color: #E9EBFE;
-	font-family: "微软雅黑";
-	margin-top: 50px;
-	float: right;
-	margin-right: 20px;
+	margin-top: -347px;
+	margin-left: 300px;
 	display: inline-block;
-	border: 2px solid #ccc;
+	border: 1px solid;
 	width: 35%;
-	height: 450px;
-	color: #4d4d4d;
+	height: 340px;
 }
 
+/*按钮*/
 #btn {
 	width: 90%;
-	height: 60px;
+	height: 30px;
 	margin-top: 10px;
 	font-size: large;
 	background-color: #E9EBFE;
 }
 
-#area {
-	height: 250px;
-	width: 50%;
-	margin-left: -50px;
-	margin-top: 100px;
-	font-size: 30px;
-	line-height: 40px;
+/*放钱口*/
+#pin {
+	border: 17px solid;
+	color: #545151;
+	width: 35%;
+	height: 40px;
+	margin-top: -400px;
+	margin-left: 300px;
+	font-size: large;
+	background-color: #000;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 1em;
 }
 
+/*取钱口*/
+#pout {
+	border: 12px solid;
+	color: #FFFFFF;
+	height: 280px;
+	width: 280px;
+	margin-top: -400px;
+	margin-right: 20px;
+	float: right;
+	background-color: #545454;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 1em;
+}
+
+/*管理员按钮*/
+.identity {
+	border: 8px solid;
+	color: #5E5E85;
+	height: 50px;
+	width: 280px;
+	margin-top: -50px;
+	margin-right: 20px;
+	float: right;
+	background-color: #FFA500;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 1em;
+}
+/*打印区*/
+#area {
+	height: 397px;
+	width: 250px;
+	margin-left: -90px;
+	margin-top: 20px;
+	font-size:18px;
+}
+
+/*数字按钮*/
 .number {
 	width: 30%;
 	height: 45px;
@@ -105,6 +153,17 @@
 	background-color: #7A82FF;
 }
 
+/*出钱口*/
+#div1 {
+	border: 9px solid;
+	color: #463D3D;
+	background: #FFF;
+	width: 170px;
+	height: 100px;
+	box-shadow: #FFF 0 0 20px;
+	margin:0 auto;
+	margin-top:80px;
+}
 #log {
 	border: 1px solid;
 	width: 20%;
@@ -113,50 +172,34 @@
 	font-size: small;
 	display: inline;
 }
-
 .button {
-	width: 122px;
+	width: 45%;
 	height: 40px;
 	margin-top: 15px;
 	background-color: #E9EBFE;
-	
 }
 
-.identity {
-	width: 122px;
-	height: 40px;
-	margin-top: 20px;
-	background-color: #E9EBFE;
-	margin-left: -580px;
-}
-#ll{
-  width:600px;
-  height:200px;
-  border:1px solid #ccc;
-  background:#ccc;
-}
-img{
-  width:400px;
-  height:150px;
-}
+/*钞票*/
 .money{
-  display:none;
+  width:100%;
+  height:100%;
 }
 </style>
 </head>
 
 <body bgcolor="#ffffff">
-
 	<div id="main">
 		<div id="display"></div>
 		<textarea rows="15" cols="20" id="area">
-		  </textarea>
-		
+	    </textarea>
 		<div id="panel">
+		</div>
+		<div>
+			<button type="button" id="pin" class="insertMoney"></button>
 		</div>
 		<div id="receipt">
 			<center>
-				<button type="button" id="btn">打印口</button>
+				<button type="button" id="btn">打印</button>
 				<br /> <br />
 			</center>
 			<center>
@@ -188,12 +231,15 @@ img{
 			</center>
 			<br />
 			<center></center>
-			<button class="identity">管理员</button>
+			<br /> <br />
 		</div>
-	     <button class="insertMoney">插钱口</button>
-		<div id="ll">出钱口
-		  <img class="money" src="img/money.jpg"></img>
-		  <img class="gaizi" src="img/123.jpg"></img>
+		<div>
+			<div id="pout">
+				<div id="div1">
+				<img class="money" src="img/money.jpg"></img>
+				</div>
+			</div>
+			<button type="button" class="identity">管理员</button>
 		</div>
 	</div>
 </body>

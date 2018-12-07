@@ -27,6 +27,7 @@ public class TransactionServlet extends HttpServlet {
 		int options = Integer.parseInt(req.getParameter("num"));
 		currentSession.selectTransaction(options);
 		String json = ATM.getInstance().getResponse();
+		System.out.println(json);
 		resp.setContentType("text/json");  
 		resp.setCharacterEncoding("UTF-8"); 
 		resp.getWriter().write(json);

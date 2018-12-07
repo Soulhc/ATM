@@ -102,6 +102,8 @@ public class Withdraw extends Transaction {
 		ATM machine = ATM.getInstance();
 		machine.getDisplay().setText("请选择业务 1:取款 2:存款 0:退出 ");
 		machine.getDigitButton().stateChange(0, 0, "TransactionServlet");
+		machine.getMoneySlot().setInsertMoney(false);
+		machine.getMoneySlot().setDepositMoney(false);
 	}
 	
 	/**

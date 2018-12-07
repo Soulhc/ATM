@@ -59,6 +59,8 @@ cardSlot.refresh = function refresh(text,inserted){
 	$("#card").attr('disable',inserted);
 }
 
+
+//存钱口和取钱口对象
 var moneySlot = {insertMoney:false,depositMoney:false};
 moneySlot.refresh = function refresh(insertMoney,depositMoney){
 	if(insertMoney){
@@ -111,17 +113,18 @@ function readNum(obj){
 //终于找到  程序入口
 $(document).ready(function() {
 	$("#card").click(insertCard);
-	$("#identity").click(insertAdminCard);
+	$(".identity").click(insertAdminCard);
 	getStatus();
 });
 
 function insertMoney(){
 	jPrompt('请放入面额为100的纸币','',function(event,val){
-		if(val%100==0 && val<=5000){
-		 var str="您已放入了"+val+"元,请按确认按钮将钱存入。";
-		 num = val;
-		 display.show(str);
-		}
+		var intVal = parseInt(val);
+		if(intVal%100==0 && intVal<=5000-num ){
+			 num += intVal;
+			 var str="您已放入了"+num+"元,请按确认按钮将钱存入。";
+			 display.show(str);
+			}
 	},"存款");
 }
 function refresh(resp){
@@ -132,6 +135,7 @@ function refresh(resp){
 	digitButton.refresh(resp.digitbutton.state,resp.digitbutton.visibility,resp.digitbutton.servletName);
 	area.refresh(resp.print.text);
 	identityButton.refresh(resp.identity_button.isAppear);
+	moneySlot.refresh(resp.moneySolt.insertMoney,resp.moneySolt.depositMoney);
 }
 
 function getStatus(){
@@ -154,7 +158,7 @@ function turnoff(){
 }
 
 function insertCard(){
-	jPrompt('请输入账号','',function(event,val){
+	jPrompt('请输入卡号','',function(event,val){
 		var cardNo = val;
 		 $.post('/ATM/CardInsertedServlet','cardNo='+cardNo, function(responseText) {
 				refresh(responseText);
@@ -163,9 +167,9 @@ function insertCard(){
 }
 
 function insertAdminCard(){
-	jPrompt('请输入账号','',function(event,val){
+	jPrompt('请输入管理员卡号','',function(event,val){
 		var cardNo = val;
-		 $.post('/ATM/CardInsertedServlet','cardNo='+cardNo, function(responseText) {
+		 $.post('/ATM/CardInsertedAdminServlet','cardNo='+cardNo, function(responseText) {
 				refresh(responseText);
 			});	
 	},"账号验证");

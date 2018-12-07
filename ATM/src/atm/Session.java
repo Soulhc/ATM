@@ -88,7 +88,6 @@ public class Session {
 	
 	/**
 	 * 确定银行卡是否有效。需要和后台数据库进行比较.
-	 * 现在的实现假设银行卡是有效的。
 	 * @param cardNo
 	 * @return 银行卡是否正确。
 	 */
