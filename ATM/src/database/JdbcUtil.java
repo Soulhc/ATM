@@ -96,6 +96,7 @@ public class JdbcUtil {
 			}
 		}
 	
+    //测试
 	public static void main(String[] args) {
 		Connection conn=JdbcUtil.getConnection();//利用封装好的类名来调用连接方法便可
         System.out.println(conn+",成功连接数据库");

@@ -18,7 +18,6 @@ public class CardSlot {
 	private String text = "插卡";
 	// 是否有银行卡在ATM内
 	private boolean inserted = false;
-	
 	/**
 	 * 插入银行卡
 	 */

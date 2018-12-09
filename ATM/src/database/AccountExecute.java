@@ -25,7 +25,7 @@ public class AccountExecute {
 		Statement stmt = null;
 		ResultSet rs = null;
 		String sql = "select * from account";
-		conn=JdbcUtil.getConnection();
+		conn=C3p0Utils.getConnection();
 		try {
 			stmt=conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -40,7 +40,7 @@ public class AccountExecute {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JdbcUtil.close(conn, stmt, rs);
+		C3p0Utils.close(conn, stmt);
 		return accountList;
 	}
 	
@@ -48,7 +48,7 @@ public class AccountExecute {
 	public static int updateAccount(double blance,String cardNo){
 		Connection conn = null;
 	    PreparedStatement pstmt = null;
-	    conn = JdbcUtil.getConnection();
+	    conn = ThreadLocalUtil.getConnection();
 	    int result = 0;
 	    String sql = "update account set balance=? where card_no=?";
 	    try {
@@ -56,7 +56,6 @@ public class AccountExecute {
 			pstmt.setDouble(1,blance);
 		    pstmt.setString(2,cardNo);
 		    result = pstmt.executeUpdate();
-		    JdbcUtil.close(conn, pstmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

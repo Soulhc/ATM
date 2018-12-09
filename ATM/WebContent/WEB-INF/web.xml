@@ -33,10 +33,6 @@
     <servlet-class>servlet.WithdrawInfoServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>WithdepositServlet</servlet-name>
-    <servlet-class>servlet.WithdepositServlet</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>CardInsertedAdminServlet</servlet-name>
     <servlet-class>servlet.CardInsertedAdminServlet</servlet-class>
   </servlet>
@@ -67,10 +63,6 @@
   <servlet-mapping>
     <servlet-name>WithdrawInfoServlet</servlet-name>
     <url-pattern>/WithdrawInfoServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>WithdepositServlet</servlet-name>
-    <url-pattern>/WithdepositServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>WithdrawPrintServlet</servlet-name>

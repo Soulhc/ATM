@@ -29,7 +29,7 @@ public class AuthServlet extends HttpServlet {
 		resp.setContentType("text/json");  
 		resp.setCharacterEncoding("UTF-8"); 
 		resp.getWriter().write(json);
-		System.out.println(json);
+	//  System.out.println(json);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

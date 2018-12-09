@@ -21,8 +21,12 @@ public class Transaction {
 	public static final int TYPE_EXIT = 0; // 退出交易
 	public static final int TYPE_WITHDRAW = 1; // 取款交易
 	public static final int TYPE_DEPOSIT = 2; // 存款交易
+	public static final int TYPE_TRANSFER = 3; //转账交易
+	public static final int TYPE_QUERY = 4; //查询余额
+	public static final int TYPE_RETURN = 5; //返回业务界面
     public static final String BALANCE_IN = "存款";
 	public static final String BALANCE_OUT = "取款";
+	public static final String BALANCE_Tran = "收到";
 	
 	// 会话的状态
 	private int state = TRANS_UNSTART;
@@ -33,8 +37,12 @@ public class Transaction {
 	// 金额的大小
 	private double amount = 0.0;
 	
+	private String cardNo;
 	
-	
+	public String getCardNo() {
+		return cardNo;
+	}
+
 	/**
 	 * 获取金额
 	 * @return
@@ -74,6 +82,10 @@ public class Transaction {
 		this.session = session;
 		this.acct = acct;
 	}
+	
+	public Transaction(String cardNo){
+		this.cardNo = cardNo;
+	}
 	/**
 	 * 根据用户的选择，生成一个交易子类
 	 * @param session
@@ -85,7 +97,7 @@ public class Transaction {
 		Transaction tmp = null;
 		switch(options) {
 			case TYPE_WITHDRAW: 
-				tmp = new Withdraw(session,acct);
+				tmp = new Withdraw(session,acct,options);
 				break;
 			case TYPE_EXIT:
 				// 插卡孔状态要变 开关按钮状态要变 显示屏状态要变 数字键盘状态要变
@@ -102,14 +114,40 @@ public class Transaction {
 			case TYPE_DEPOSIT:
 				tmp = new Withdraw(session,acct,options);
 				break;
+			case TYPE_TRANSFER:
+				tmp = new Withdraw(session,acct,options);
+				break;
+			case TYPE_QUERY:
+				tmp = new Withdraw(session,acct,options);
+				break;
+			case TYPE_RETURN:
+				tmp = new Withdraw(session,acct,options);
+				break;
 		}
 		return tmp;
 	}
 	
 	/**
+	 * 选择交易
+	 */
+	public void TransferTransaction(int cardNo) {
+		ATM machine = ATM.getInstance();
+		String card_no = String.valueOf(cardNo);
+		boolean isYouXiao = this.getSession().verify(card_no);
+		if(isYouXiao){
+			this.cardNo = card_no;
+			machine.getDisplay().setText("请输入金额");
+			machine.getPrint().setText("");
+			machine.getDigitButton().stateChange(1, 0, "WithdrawInfoServlet");
+			machine.getStateJudgement().setTransactionState(4);
+		}
+		
+	}
+	
+	/**
 	 * 把执行用户的请求
 	 */
-	public void execute() {
+	public void execute()throws Exception {
 		
 	}
 	
@@ -125,6 +163,13 @@ public class Transaction {
 	 * 把执行用户的存款请求
 	 */
 	public void deposit() {
+		
+	}
+	
+	/**
+	 * 执行用户转账请求
+	 */
+	public void transfer(){
 		
 	}
 	

@@ -20,9 +20,9 @@ import java.util.List;
 public class TransactionExecute {
 
 	//插入数据库交易信息
-	public static void InsertTransaction(String cardNo, String operation, double account) {
-		Connection conn = JdbcUtil.getConnection();
-		String sql = "insert into transaction(card_no,operation,account,date) values (?,?,?,?)";
+	public static void InsertTransaction(String cardNo, String operation, double account,double balance) {
+		Connection conn = ThreadLocalUtil.getConnection();
+		String sql = "insert into transaction(card_no,operation,account,date,balance) values (?,?,?,?,?)";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -31,6 +31,7 @@ public class TransactionExecute {
 			pstmt.setDouble(3, account);
 			Timestamp t = new Timestamp(new Date().getTime());
 			pstmt.setTimestamp(4,t);
+			pstmt.setDouble(5, balance);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -44,7 +45,7 @@ public class TransactionExecute {
 			Statement stmt = null;
 			ResultSet rs = null;
 			String sql = "select * from transaction where date=(select max(date) from transaction)";
-			conn=JdbcUtil.getConnection();
+			conn=C3p0Utils.getConnection();
 			try {
 				stmt=conn.createStatement();
 				rs = stmt.executeQuery(sql);
@@ -55,31 +56,34 @@ public class TransactionExecute {
 					String date = rs.getString("date");
 					String newDate = date.substring(0, date.length()-2);
 					transateList.add(newDate);
+					transateList.add(rs.getString("balance"));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			JdbcUtil.close(conn, stmt, rs);
+			C3p0Utils.close(conn, stmt,rs);
 			return transateList;
+			
 		}
 		
 		//更新数据库
 		public static int updateTransaction(String printText){
 			Connection conn = null;
 		    PreparedStatement pstmt = null;
-		    conn = JdbcUtil.getConnection();
+		    conn = ThreadLocalUtil.getConnection();
 		    int result = 0;
 		    String sql = "update transaction set printext=? where date=(select * from (select max(date) from transaction) a)";
 		    try {
 		    	pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1,printText);
 			    result = pstmt.executeUpdate();
-			    JdbcUtil.close(conn, pstmt);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		    return result;
 		}
+		
+    //测试
 	public static void main(String[] args) {
 		List<Object>print = TransactionExecute.resultList();
 		System.out.println(print.get(0));

@@ -1,4 +1,6 @@
 var num = 0; //使用数字键输入的数字
+var transaction = 0;//根据这个状态判断交易项
+var identity = 0; //根据这个状态判断身份
 
 // ATM对象
 var atm = {status:0}; // 0:空闲 1:关闭 2:处理中
@@ -10,6 +12,7 @@ atm.refresh = function refresh(status){
 var display = {text:""};
 display.refresh = function refresh(text){
 	this.text = text;
+	num = 0;
 	$("#display").html(this.text);
 }
 display.show = function show(text){
@@ -48,6 +51,15 @@ switchButton.refresh = function refresh(text,disable){
 		$("#switch").click(turnon);	
 	}
 	$("#switch").attr('disabled',disable);
+}
+
+// 状态信息对象
+var stateJudgement = {transactionState:5,identityState:5};
+stateJudgement.refresh= function refresh(transactionState,identityState){
+	this.transactionState = transactionState;
+	this.identityState = identityState;
+	transaction = this.transactionState;
+	
 }
 
 // 插卡孔
@@ -136,6 +148,7 @@ function refresh(resp){
 	area.refresh(resp.print.text);
 	identityButton.refresh(resp.identity_button.isAppear);
 	moneySlot.refresh(resp.moneySolt.insertMoney,resp.moneySolt.depositMoney);
+	stateJudgement.refresh(resp.stateJudgement.transactionState,resp.stateJudgement.identityState);
 }
 
 function getStatus(){
@@ -176,7 +189,7 @@ function insertAdminCard(){
 }
 
 function submitNum(number){
-	$.post('/ATM/'+digitButton.servletName,'num='+number, function(responseText) {
+	$.post('/ATM/'+digitButton.servletName,'num='+number+"&transaction="+transaction, function(responseText) {
 		refresh(responseText);
 		num = 0;
 	});	

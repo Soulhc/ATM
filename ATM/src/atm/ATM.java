@@ -7,7 +7,6 @@
 
 package atm;
 
-import java.security.Identity;
 
 /**
 * 一个ATM对象代表了现实世界里的一个ATM.
@@ -38,9 +37,16 @@ public class ATM {
 	private Print print = null;
 	// 管理员按钮对象
 	private IdentityButton identity_button = null;
-	
+	// 交易状态对象
+	private StateJudgement stateJudgement = null;
+	// 放钱对象
 	private MoneySlot moneySlot = null;
 	
+	
+	public StateJudgement getStateJudgement() {
+		return stateJudgement;
+	}
+
 	public MoneySlot getMoneySlot() {
 		return moneySlot;
 	}
@@ -89,6 +95,7 @@ public class ATM {
 		print = new Print();
 		identity_button = new IdentityButton();
 		moneySlot = new MoneySlot();
+		stateJudgement = new StateJudgement();
 	}
 
 	/**
@@ -173,7 +180,7 @@ public class ATM {
 		}
 	
 	/**
-	 * 获取整个ATM系统各个对象的状态字符串. Json格式
+	 * 获取整个ATM系统各个对象的状态字符串. Json格式   \"为转义字符  代表"
 	 * 如果想了解这个函数到底返回什么内容，可以在浏览器中访问 
 	 * http://localhost:8081/ATM/GetStatusServlet
 	 */
@@ -196,6 +203,8 @@ public class ATM {
 		output += "\"identity_button\":" + this.identity_button.toString();
 		output += ",";
 		output += "\"moneySolt\":" + this.moneySlot.toString();
+		output += ",";
+		output += "\"stateJudgement\":" + this.stateJudgement.toString();
 		output += "}";
 		return output;
 	}

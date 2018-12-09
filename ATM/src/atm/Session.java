@@ -36,6 +36,10 @@ public class Session {
 	// 输入密码错误的次数
 	private int time;
 
+	public int getState() {
+		return state;
+	}
+
 	public void setState(int state) {
 		this.state = state;
 	}
@@ -112,7 +116,7 @@ public class Session {
 			if(this.acct != null) {
 				state = CHOOSING;
 				ATM instance = ATM.getInstance();
-				instance.getDisplay().setText("请选择业务 1:取款 2:存款 0:退出 ");
+				instance.getDisplay().setText("请选择业务 1:取款 2:存款 3:转账 4:查询 0:退出 ");
 				instance.getDigitButton().stateChange(0, 1, "TransactionServlet");
 			}
 			// 账户密码不正确
@@ -135,9 +139,15 @@ public class Session {
 	public void selectTransaction(int options) {
 		if(state == CHOOSING) {
 			this.trans = Transaction.makeTransaction( this, this.acct, options);
-			state = INTRANSACTION;
+			if(this.state==10){
+				state = CHOOSING;
+			}else{
+				state = INTRANSACTION;
+			}
+		
 		}
 	}
+	
 	
 	/**
 	 * 获取Session的状态字符串

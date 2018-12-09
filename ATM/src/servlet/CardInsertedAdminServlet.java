@@ -27,7 +27,7 @@ public class CardInsertedAdminServlet extends HttpServlet {
 		String cardNo = req.getParameter("cardNo");
 		ATM.getInstance().cardInsertedAdmin(cardNo);
 		String json = ATM.getInstance().getResponse();
-		System.out.println("json"+json);
+	//	System.out.println("json"+json);
 		resp.setContentType("text/json");  
 		resp.setCharacterEncoding("UTF-8"); 
 		resp.getWriter().write(json);
