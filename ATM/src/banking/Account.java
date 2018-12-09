@@ -150,7 +150,6 @@ public class Account {
          if(this.balance >= amount) {
 			this.balance = this.balance - amount;
 		    AccountExecute.updateAccount(this.balance,this.card_no);
-			TransactionExecute.InsertTransaction(this.card_no,Transaction.BALANCE_OUT,amount,this.balance);
 			return 0;
 		}
 		return 1;
@@ -189,7 +188,7 @@ public class Account {
 		try{
 			ThreadLocalUtil.startTranscation();
 			int isSuccess = this.withdrawInfo(amount);
-			if(isSuccess==5){
+			if(isSuccess==1){
 				return 0;
 			}else{
 				AccountExecute.updateAccount(ohterBalance,otherCard);

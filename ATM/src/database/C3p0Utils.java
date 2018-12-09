@@ -3,6 +3,7 @@ package database;
 import java.beans.PropertyVetoException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,8 @@ public class C3p0Utils {
 	public static ComboPooledDataSource getDataSource() throws PropertyVetoException, IOException {
 		// web项目下jdbc.properties中的路径
 		String path = Thread.currentThread().getContextClassLoader().getResource("jdbc.properties").getPath();
-		System.out.println(path);
+		//如果路径出现20%则换掉它
+		path = URLDecoder.decode(path, "utf-8");
 		FileInputStream fis = new FileInputStream(path);
 		p.load(fis);
 		// 第一步：创建连接池核心工具类
