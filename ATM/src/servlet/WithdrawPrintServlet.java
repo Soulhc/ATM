@@ -28,7 +28,7 @@ public class WithdrawPrintServlet extends HttpServlet {
 		resp.setContentType("text/json");  
 		resp.setCharacterEncoding("UTF-8"); 
 		resp.getWriter().write(json);
-		System.out.println("123"+json);
+	//	System.out.println("123"+json);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

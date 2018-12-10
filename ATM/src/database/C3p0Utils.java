@@ -13,7 +13,12 @@ import java.util.Properties;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-//数据库连接池
+/**
+ * 使用c3p0连接池连接
+ * 
+ * @author 梁木  
+ * @date 2018年12月10日
+ */
 public class C3p0Utils {
 
 	private static Properties p = new Properties();

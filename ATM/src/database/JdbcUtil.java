@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.Properties;
 
 /**
- * 连接数据库
+ * 连接数据库   在次项目中已废弃。因为应经采用了c3p0连接池连接
  * 
  * @author 梁木  
  * @date 2018年12月1日

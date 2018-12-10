@@ -3,9 +3,14 @@ package database;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * 使用线程池完成转账模块以及事务的使用
+ * 
+ * @author 梁木  
+ * @date 2018年12月10日
+ */
 public class ThreadLocalUtil {
 	
-//线程池获取connection
 private static ThreadLocal<Connection> tl=new ThreadLocal<Connection>();
 	
 	/**
