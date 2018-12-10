@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-12-07 17:11:09
+Date: 2018-12-10 14:51:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,9 +29,9 @@ CREATE TABLE `account` (
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES ('123', '123', '455', 'user');
-INSERT INTO `account` VALUES ('abc123', '1234', '9900', 'user');
-INSERT INTO `account` VALUES ('123456', null, null, 'admin');
+INSERT INTO `account` VALUES ('20160402', '123', '10000', 'user');
+INSERT INTO `account` VALUES ('20160401', '123', '10000', 'user');
+INSERT INTO `account` VALUES ('20160412', null, null, 'admin');
 
 -- ----------------------------
 -- Table structure for transaction
@@ -41,7 +41,8 @@ CREATE TABLE `transaction` (
   `card_no` varchar(22) COLLATE utf8_unicode_ci DEFAULT NULL,
   `operation` varchar(22) COLLATE utf8_unicode_ci DEFAULT NULL,
   `account` double DEFAULT NULL,
-  `date` datetime DEFAULT NULL
+  `date` datetime DEFAULT NULL,
+  `balance` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
