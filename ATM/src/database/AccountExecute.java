@@ -48,7 +48,7 @@ public class AccountExecute {
 	public static int updateAccount(double blance,String cardNo){
 		Connection conn = null;
 	    PreparedStatement pstmt = null;
-	    conn = ThreadLocalUtil.getConnection();
+	    conn = C3p0Utils.getConnection();
 	    int result = 0;
 	    String sql = "update account set balance=? where card_no=?";
 	    try {
@@ -59,6 +59,43 @@ public class AccountExecute {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	    C3p0Utils.close(conn, pstmt);
 	    return result;
+	}
+	
+	public static boolean transfrom(String card_no,String otherCard,double amount){
+		Connection con = ThreadLocalUtil.getConnection();
+		String sql1 = "update account set balance = balance - ? where card_no = ?;";
+        String sql2 = "update account set balance = balance + ? where card_no = ?;";
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        try{
+        	//开启事务
+        	ThreadLocalUtil.startTranscation();
+        	 //转账时涉及的两个账户以及各账户的金额变动
+            ps1 = con.prepareStatement(sql1);
+            ps1.setDouble(1, amount);
+            ps1.setString(2, card_no);
+            ps1.executeUpdate();
+            
+            ps2 = con.prepareStatement(sql2);
+            ps2.setDouble(1, amount);
+            ps2.setString(2, otherCard);
+            ps2.executeUpdate();
+            ThreadLocalUtil.commit();
+            return true;
+        }catch(Exception e){
+			//如果出现异常，则回滚
+			ThreadLocalUtil.rollback();
+			try {
+				throw new Exception("操作失败");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}finally{
+			//最后将连接关闭
+			ThreadLocalUtil.release();
+		}
+		return false;
 	}
 }

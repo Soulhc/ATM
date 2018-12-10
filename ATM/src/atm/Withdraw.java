@@ -166,10 +166,15 @@ public class Withdraw extends Transaction {
 				ATM machine = ATM.getInstance();
 				machine.getDisplay().setText("转账成功。你的余额是"+this.getAccount().getBalance()+"<br>"+"打印:0 不打印:1");
 				machine.getDigitButton().stateChange(0, 0, "WithdrawPrintServlet");
+			}else if(isSuccess==0){
+				this.getSession().setState(Session.CHOOSING);
+				ATM machine = ATM.getInstance();
+				machine.getDisplay().setText("对不起。取款失败,您的账户余额不足。你的账户存款为"+this.getAccount().getBalance()+"元"+"<br><br>"+"请重新选择业务 1:取款 2:存款  3:转账  4:查询 0:退出  ");
+				machine.getDigitButton().stateChange(0, 0, "TransactionServlet");
 			}else{
 				this.getSession().setState(Session.CHOOSING);
 				ATM machine = ATM.getInstance();
-				machine.getDisplay().setText("对不起。取款失败,您的账户余额不足。你的账户存款为"+this.getAccount().getBalance()+"元"+"<br><br>"+"请选择业务 1:取款 2:存款  3:转账  4:查询 0:退出  ");
+				machine.getDisplay().setText("交易失败。交易出现故障。"+"<br><br>"+"请选择业务 1:取款 2:存款  3:转账  4:查询 0:退出  ");
 				machine.getDigitButton().stateChange(0, 0, "TransactionServlet");
 			}
 	    }

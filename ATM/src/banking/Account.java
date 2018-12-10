@@ -140,21 +140,6 @@ public class Account {
 		return 1;
 	}
 	
-	/**
-	 * 转账中的扣款
-	 * 
-	 * @param amount
-	 * @return 0:成功 1:不成功
-	 */
-	public int withdrawInfo(double amount) {
-         if(this.balance >= amount) {
-			this.balance = this.balance - amount;
-		    AccountExecute.updateAccount(this.balance,this.card_no);
-			return 0;
-		}
-		return 1;
-	}
-	
 
 	/**
 	 * 获取账户余额
@@ -183,35 +168,19 @@ public class Account {
 	 * @throws Exception 
 	 */
 	public int transfer(double amount,String otherCard,String tran,double ohterBalance){
-		ohterBalance += amount;
-		ThreadLocalUtil.startTranscation();
-		try{
-			ThreadLocalUtil.startTranscation();
-			int isSuccess = this.withdrawInfo(amount);
-			if(isSuccess==1){
-				return 0;
+		    ohterBalance += amount;
+			if(this.balance >= amount){
+				this.balance = this.balance - amount;
+				boolean isSuccess = AccountExecute.transfrom(this.card_no, otherCard, amount);
+				if(isSuccess){
+					TransactionExecute.InsertTransaction(otherCard,tran,amount,ohterBalance);
+					return 1;
+				}else{
+					return 2;
+				}
 			}else{
-				AccountExecute.updateAccount(ohterBalance,otherCard);
-				Thread.currentThread();
-				Thread.sleep(1000);
-				TransactionExecute.InsertTransaction(otherCard,tran,amount,ohterBalance);
-				ThreadLocalUtil.commit();
-				return 1;
+				return 0;
 			}
-			
-		}catch(Exception e){
-			//如果出现异常，则回滚
-			ThreadLocalUtil.rollback();
-			try {
-				throw new Exception("操作失败");
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}finally{
-			//最后将连接关闭
-			ThreadLocalUtil.release();
-		}
-		return 3;
 	}
 
 	public String getCard_no() {

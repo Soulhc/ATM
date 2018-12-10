@@ -133,15 +133,16 @@ public class Transaction {
 	public void TransferTransaction(int cardNo) {
 		ATM machine = ATM.getInstance();
 		String card_no = String.valueOf(cardNo);
-		boolean isYouXiao = this.getSession().verify(card_no);
-		if(isYouXiao){
-			this.cardNo = card_no;
-			machine.getDisplay().setText("请输入金额");
-			machine.getPrint().setText("");
-			machine.getDigitButton().stateChange(1, 0, "WithdrawInfoServlet");
-			machine.getStateJudgement().setTransactionState(4);
+		if(!card_no.equals(this.acct.getCard_no())){
+			boolean isYouXiao = this.getSession().verify(card_no);
+			if(isYouXiao){
+				this.cardNo = card_no;
+				machine.getDisplay().setText("请输入金额");
+				machine.getPrint().setText("");
+				machine.getDigitButton().stateChange(1, 0, "WithdrawInfoServlet");
+				machine.getStateJudgement().setTransactionState(4);
+			}
 		}
-		
 	}
 	
 	/**

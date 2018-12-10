@@ -42,7 +42,7 @@ public class ATM {
 	// 放钱对象
 	private MoneySlot moneySlot = null;
 	
-	
+
 	public StateJudgement getStateJudgement() {
 		return stateJudgement;
 	}
