@@ -63,6 +63,7 @@ public class AccountExecute {
 	    return result;
 	}
 	
+	//转账操作
 	public static boolean transfrom(String card_no,String otherCard,double amount){
 		Connection con = ThreadLocalUtil.getConnection();
 		String sql1 = "update account set balance = balance - ? where card_no = ?;";
